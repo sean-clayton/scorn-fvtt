@@ -1,122 +1,127 @@
 {
-  "id": "cairn",
-  "title": "Cairn",
-  "description": "Cairn for FoundryVTT",
-  "version": "0.10.28",
+  "id": "scorn",
+  "title": "SCORN",
+  "description": "SCORN for FoundryVTT",
+  "version": "#{VERSION}#",
   "compatibility": {
-    "minimum": "10",
-    "verified": "10"
+    "minimum": "11",
+    "verified": "11",
+    "maximum": "11"
   },
-  "license": "LICENSE.txt",
-  "url": "https://github.com/yochaigal/Cairn-FoundryVTT/",
-  "manifest": "https://github.com/yochaigal/Cairn-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/yochaigal/Cairn-FoundryVTT/releases/latest/download/system.zip",
+  "license": "LICENSE-AGPL",
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
   "authors": [
+    {
+      "name": "Sean Clayton",
+      "url": "https://github.com/sean-clayton"
+    },
     {
       "name": "yochaigal",
       "url": "https://yochaigal.itch.io/"
     }
   ],
-  "esmodules": ["module/cairn.js"],
-  "styles": ["css/cairn.css"],
+  "esmodules": ["module/scorn.js"],
+  "styles": ["css/scorn.css"],
   "packs": [
     {
       "name": "armor",
       "label": "Armor",
       "path": "packs/armor.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "character-traits",
       "label": "Character Traits",
       "path": "packs/character-traits.db",
       "type": "RollTable",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "expeditionary-gear",
       "label": "Expeditionary Gear",
       "path": "packs/expeditionary-gear.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "extra",
       "label": "Extra",
       "path": "packs/extra.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "gear-tables",
       "label": "Gear Tables",
       "path": "packs/gear-tables.db",
       "type": "RollTable",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "character-creation-tables-srd",
       "label": "Character Creation Tables - SRD",
       "path": "packs/character-creation-tables-srd.db",
       "type": "RollTable",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "utils",
       "label": "Utils",
       "path": "packs/utils.db",
       "type": "RollTable",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "macros",
       "label": "Macros",
       "path": "packs/macros.db",
       "type": "Macro",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "monsters",
       "label": "Monsters",
       "path": "packs/monsters.db",
       "type": "Actor",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "spellbooks",
       "label": "Spellbooks",
       "path": "packs/spellbooks.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "more-spellbooks",
       "label": "More Spellbooks",
       "path": "packs/more-spellbooks.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "tools",
       "label": "Tools",
       "path": "packs/tools.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "trinkets",
       "label": "Trinkets",
       "path": "packs/trinkets.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     },
     {
       "name": "weapons",
       "label": "Weapons",
       "path": "packs/weapons.db",
       "type": "Item",
-      "system": "cairn"
+      "system": "scorn"
     }
   ],
   "scripts": [],

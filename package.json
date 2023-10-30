@@ -1,13 +1,12 @@
 {
-  "name": "scorn",
-  "version": "1.0.0",
+  "homepage": "https://github.com/sean-claton/scorn-fvtt",
   "scripts": {
     "lint": "eslint --fix --ext .js ./module --format node_modules/eslint-plugin-i18n-json/formatter.js lang/*"
   },
   "browserslist": [
     "last 3 versions"
   ],
-  "license": "MIT",
+  "license": "MIT AND AGPL-3.0",
   "private": true,
   "devDependencies": {
     "@eslint/eslintrc": "^2.1.2",

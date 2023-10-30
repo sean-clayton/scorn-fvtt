@@ -1,35 +1,39 @@
-import { CairnActor } from "./actor/actor.js";
+import { ScornActor } from "./actor/actor.js";
 import {
-  compendiumInfoFromString, drawTableItem,
-  drawTableText, findCompendiumItem,
-} from './compendium.js'
-import { Cairn } from "./config.js";
-import { evaluateFormula, formatString } from './utils.js'
+  compendiumInfoFromString,
+  drawTableItem,
+  drawTableText,
+  findCompendiumItem,
+} from "./compendium.js";
+import { Scorn } from "./config.js";
+import { evaluateFormula, formatString } from "./utils.js";
 
 /**
- * @returns {Promise.<CairnActor>}
+ * @returns {Promise.<ScornActor>}
  */
-export const createCharacter = async () => createActorWithCharacter(await generateCharacter());
+export const createCharacter = async () =>
+  createActorWithCharacter(await generateCharacter());
 
 /**
- * @param {CairnActor} actor
- @returns {Promise.<CairnActor>}
+ * @param {ScornActor} actor
+ @returns {Promise.<ScornActor>}
  */
-export const regenerateActor = async (actor)  => updateActorWithCharacter(actor, await generateCharacter());
+export const regenerateActor = async (actor) =>
+  updateActorWithCharacter(actor, await generateCharacter());
 
 /**
  * @param {Object} characterData
- * @returns {Promise.<CairnActor>}
+ * @returns {Promise.<ScornActor>}
  */
 export const createActorWithCharacter = async (characterData) => {
   const data = characterToActorData(characterData);
-  return CairnActor.create(data);
+  return ScornActor.create(data);
 };
 
 /**
- * @param {CairnActor} actor
+ * @param {ScornActor} actor
  * @param {Object} characterData
- @returns {Promise.<CairnActor>}
+ @returns {Promise.<ScornActor>}
  */
 export const updateActorWithCharacter = async (actor, characterData) => {
   const data = characterToActorData(characterData);
@@ -54,7 +58,7 @@ export const updateActorWithCharacter = async (actor, characterData) => {
 export const rollTextItems = async (items) => {
   const data = {};
   for (const [key, value] of Object.entries(items)) {
-    const [compendium, table] = compendiumInfoFromString(value)
+    const [compendium, table] = compendiumInfoFromString(value);
     data[key] = await drawTableText(compendium, table);
   }
   return data;
@@ -62,15 +66,15 @@ export const rollTextItems = async (items) => {
 
 /**
  * @param {Object} items
- @return {Promise<CairnItem[]>}
+ @return {Promise<ScornItem[]>}
  */
 export const rollItems = async (items) => {
   const result = [];
   for (const value of Object.values(items)) {
-    const [compendium, table] = compendiumInfoFromString(value)
+    const [compendium, table] = compendiumInfoFromString(value);
     result.push(await drawTableItem(compendium, table));
   }
-  return result.flatMap(item => duplicate(item));
+  return result.flatMap((item) => duplicate(item));
 };
 
 /**
@@ -80,62 +84,69 @@ export const rollItems = async (items) => {
 export const rollAbilities = async (formula) => ({
   STR: (await evaluateFormula(formula)).total,
   DEX: (await evaluateFormula(formula)).total,
-  WIL: (await evaluateFormula(formula)).total
+  WIL: (await evaluateFormula(formula)).total,
 });
 
 /**
  * @param {String} formula
  * @returns {Promise.<Number>}
  */
-export const rollHitProtection = async (formula) => (await evaluateFormula(formula)).total;
+export const rollHitProtection = async (formula) =>
+  (await evaluateFormula(formula)).total;
 
 /**
  * @param {String} formula
  * @returns {Promise.<Number>}
  */
-export const rollGold = async (formula) => (await evaluateFormula(formula)).total;
+export const rollGold = async (formula) =>
+  (await evaluateFormula(formula)).total;
 
 /**
  * @param {String} formula
  * @returns {Promise.<String>}
  */
-export const rollAge = async (formula) => (await evaluateFormula(formula)).total;
+export const rollAge = async (formula) =>
+  (await evaluateFormula(formula)).total;
 
 /**
  * @param {Object} config
  * @returns {Promise.<String>}
  */
-export const rollName = async (config) => formatString(config.text, await rollTextItems(config.items));
+export const rollName = async (config) =>
+  formatString(config.text, await rollTextItems(config.items));
 
 /**
  * @param {String} config
  * @returns {Promise.<String>}
  */
-export const rollBackground = async (config) => drawTableText(...compendiumInfoFromString(config));
+export const rollBackground = async (config) =>
+  drawTableText(...compendiumInfoFromString(config));
 
 /**
  * @param {Object} config
  * @returns {Promise.<String>}
  */
-export const rollBiography = async (config) => formatString(config.text,{
-  age: await rollAge(config.age),
-  ...await rollTextItems(config.items)
-});
+export const rollBiography = async (config) =>
+  formatString(config.text, {
+    age: await rollAge(config.age),
+    ...(await rollTextItems(config.items)),
+  });
 
 /**
  * @param {Object} items
- * @returns {Promise.<CairnItem[]>}
+ * @returns {Promise.<ScornItem[]>}
  */
 export const rollStartingGear = async (items) => rollItems(items);
 
 /**
  * @param {Object} items
- * @return {Promise<CairnItem[]>}
+ * @return {Promise<ScornItem[]>}
  */
 export const findStartingItems = async (items) => {
   const result = [];
   for (const compendiumItem of items) {
-    const [compendium, table, quantity = 1] = compendiumInfoFromString(compendiumItem);
+    const [compendium, table, quantity = 1] =
+      compendiumInfoFromString(compendiumItem);
 
     const item = duplicate(await findCompendiumItem(compendium, table));
 
@@ -152,15 +163,17 @@ export const findStartingItems = async (items) => {
 export const generateCharacter = async () => {
   console.log(`Creating new character`);
 
-  const characterGenerator = Cairn.characterGenerator;
+  const characterGenerator = Scorn.characterGenerator;
 
   const abilities = await rollAbilities(characterGenerator.ability);
   const hp = await rollHitProtection(characterGenerator.hitProtection);
   const gold = await rollGold(characterGenerator.gold);
   const name = await rollName(characterGenerator.name);
   const biography = await rollBiography(characterGenerator.biography);
-  const background = await rollBackground(characterGenerator.background)
-  const startingItems = await findStartingItems(characterGenerator.startingItems);
+  const background = await rollBackground(characterGenerator.background);
+  const startingItems = await findStartingItems(
+    characterGenerator.startingItems
+  );
   const startingGear = await rollStartingGear(characterGenerator.startingGear);
 
   return {
@@ -182,9 +195,18 @@ const characterToActorData = (characterData) => ({
   name: characterData.name,
   system: {
     abilities: {
-      STR: { value: characterData.abilities.STR, max: characterData.abilities.STR },
-      DEX: { value: characterData.abilities.DEX, max: characterData.abilities.DEX },
-      WIL: { value: characterData.abilities.WIL, max: characterData.abilities.WIL },
+      STR: {
+        value: characterData.abilities.STR,
+        max: characterData.abilities.STR,
+      },
+      DEX: {
+        value: characterData.abilities.DEX,
+        max: characterData.abilities.DEX,
+      },
+      WIL: {
+        value: characterData.abilities.WIL,
+        max: characterData.abilities.WIL,
+      },
     },
     hp: {
       max: characterData.hp,

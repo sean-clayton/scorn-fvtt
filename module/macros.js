@@ -5,7 +5,7 @@ import { evaluateFormula, getInfoFromDropData } from "./utils.js";
  * @param {Number} slot
  * @return {Promise.<void>}
  */
-export const createCairnMacro = async (data, slot) => {
+export const createScornMacro = async (data, slot) => {
   const { item, actor } = await getInfoFromDropData(data);
 
   if (data.type !== "Item") {
@@ -13,22 +13,26 @@ export const createCairnMacro = async (data, slot) => {
   }
 
   if (!actor) {
-    return ui.notifications.warn("You can only create macro buttons for owned Items");
+    return ui.notifications.warn(
+      "You can only create macro buttons for owned Items"
+    );
   }
 
   if (item.type !== "weapon") {
     return ui.notifications.warn("Macros only supported for weapons");
   }
 
-  const command = `game.cairn.rollItemMacro("${actor.id}", "${item.id}");`;
-  let macro = game.macros.find((m) => m.name === item.name && m.command === command);
+  const command = `game.scorn.rollItemMacro("${actor.id}", "${item.id}");`;
+  let macro = game.macros.find(
+    (m) => m.name === item.name && m.command === command
+  );
   if (!macro) {
     macro = await Macro.create({
       name: item.name,
       type: "script",
       img: item.img,
       command,
-      flags: { "cairn.itemMacro": true },
+      flags: { "scorn.itemMacro": true },
     });
   }
   game.user.assignHotbarMacro(macro, slot);
@@ -45,11 +49,16 @@ export const rollItemMacro = async (actorId, itemId) => {
   const item = actor.items.get(itemId);
 
   if (!item && !actor) {
-    return ui.notifications.warn(`Actor "${actor.name}" does not have an item named ${item.name}`);
+    return ui.notifications.warn(
+      `Actor "${actor.name}" does not have an item named ${item.name}`
+    );
   }
 
-  const roll = await evaluateFormula(item.system.damageFormula, actor.getRollData());
-  const flavor = `${game.i18n.localize("CAIRN.RollingDmgWith")} ${item.name}`;
+  const roll = await evaluateFormula(
+    item.system.damageFormula,
+    actor.getRollData()
+  );
+  const flavor = `${game.i18n.localize("SCORN.RollingDmgWith")} ${item.name}`;
 
   roll.toMessage({
     speaker: ChatMessage.getSpeaker({ actor: actor }),

@@ -7,25 +7,50 @@ on:
   release:
     types: [published]
 
+env:
+  # The URL used for the module's "Project URL" link on FoundryVTT's website.
+  project_url: "https://github.com/${{github.repository}}"
+
+  # A URL that will always point to the latest manifest.
+  # FoundryVTT uses this URL to check whether the current module version that
+  # is installed is the latest version. This URL should NOT change,
+  # otherwise FoundryVTT won't be able to perform this check.
+  latest_manifest_url: "https://github.com/${{github.repository}}/releases/latest/download/module.json"
+
+  # The URL to the module archive associated with the module release being
+  # processed by this workflow.
+  release_module_url: "https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      # Substitute the Manifest and Download URLs in the system.json
-      - name: Substitute Manifest and Download Links For Versioned Ones
+      # Extract version embedded in the tag.
+      # This step expects the tag to be one of the following formats:
+      #   - "v<major>.<minor>.<patch>" (e.g., "v1.2.3")
+      #   - "<major>.<minor>.<patch>"  (e.g., "1.2.3")
+      #
+      # The version will be used by later steps to fill in the value for the
+      # "version" key required for a valid module manifest.
+      - name: Extract Version From Tag
+        id: get_version
+        uses: battila7/get-version-action@v2
+
+      - name: Modify System Manifest With Release-Specific Values
         id: sub_manifest_link_version
-        uses: microsoft/variable-substitution@v1
+        uses: cschleiden/replace-tokens@v1
         with:
           files: "system.json"
         env:
-          version: ${{github.event.release.tag_name}}
-          manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
-          download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
+          VERSION: ${{steps.get_version.outputs.version-without-v}}
+          URL: ${{ env.project_url }}
+          MANIFEST: ${{ env.latest_manifest_url }}
+          DOWNLOAD: ${{ env.release_module_url }}
 
       # Create a zip file with all files required by the system to add to the release
-      - run: zip -r ./system.zip "Terms of Use and License.pdf" README.md LICENSE.TXT README.md system.json template.json css/ fonts/ lang/ module/ packs/ templates/ tokens/
+      - run: zip -r ./scorn.zip README.md LICENSE-MIT LICENSE-AGPL README.md system.json template.json css/ fonts/ lang/ module/ packs/ templates/
 
       # Create a release for this specific version
       - name: Update Release with Files
@@ -37,6 +62,6 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "./system.json, ./system.zip"
+          artifacts: "./system.json, ./scorn.zip"
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
