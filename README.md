@@ -20,8 +20,9 @@ It brings in my personal homebrew into the module.
 ## License
 
 The original Cairn system is MIT licensed.
+You can find the license in the [LICENSE-MIT](LICENSE-MIT) file.
 You can find an overview of the MIT license here: https://choosealicense.com/licenses/mit/
 
 My _changes_ are AGPLv3 licensed.
-You can find the license in the [LICENSE-AGPL](LICENSE-AGPL) license.
+You can find the license in the [LICENSE-AGPL](LICENSE-AGPL) file.
 You can find an overview of the AGPLv3 license here: https://choosealicense.com/licenses/agpl-3.0/
