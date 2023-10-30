@@ -19,7 +19,7 @@ It brings in my personal homebrew into the module.
 
 ## License
 
-The original Cairn system is MIT licensed.overview of the MIT license
+The original Cairn system is MIT licensed.
 You can find an overview of the MIT license here: https://choosealicense.com/licenses/mit/
 
 My _changes_ are AGPLv3 licensed.
