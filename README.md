@@ -7,6 +7,9 @@ It brings in my personal homebrew into the module.
 
 - Removed token art (license is incompatible with AGPL)
 - Max slots is now STR or 10, whichever is higher
+- New characters start with a waterskin
+- Waterskins have uses (4)
+- Torches have uses (6 - mark one off for every ten minutes it's used)
 
 ## Installation
 

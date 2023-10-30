@@ -16,6 +16,7 @@ Scorn.characterGenerator = {
   startingItems: [
     "scorn.expeditionary-gear;Rations;1",
     "scorn.expeditionary-gear;Torch;1",
+    "scorn.expeditionary-gear;Waterskin;1",
   ],
   startingGear: [
     "scorn.character-creation-tables-srd;Starting Gear - Armor",
