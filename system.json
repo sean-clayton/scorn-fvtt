@@ -1,7 +1,7 @@
 {
   "id": "scorn",
-  "title": "SCORN",
-  "description": "SCORN for FoundryVTT",
+  "title": "Scorn",
+  "description": "Scorn for FoundryVTT",
   "version": "#{VERSION}#",
   "compatibility": {
     "minimum": "11",

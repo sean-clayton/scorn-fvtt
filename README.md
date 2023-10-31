@@ -1,4 +1,4 @@
-# SCORN Old-School Roleplaying Engine
+# Scorn Old-School Roleplaying Engine
 
 This is a fork of Yochai Gal's [Cairn](https://github.com/yochaigal/Cairn-FoundryVTT).
 It brings in my personal homebrew into the module.
